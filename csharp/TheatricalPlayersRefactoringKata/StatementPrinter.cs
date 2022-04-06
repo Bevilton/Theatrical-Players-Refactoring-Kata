@@ -10,15 +10,25 @@ namespace TheatricalPlayersRefactoringKata
         {
             var totalAmount = 0;
             var volumeCredits = 0;
-            var result = string.Format("Statement for {0}\n", invoice.Customer);
-            CultureInfo cultureInfo = new CultureInfo("en-US");
-            CountPlays(invoice, plays, ref totalAmount, ref volumeCredits, ref result, cultureInfo);
-            result += string.Format(cultureInfo, "Amount owed is {0:C}\n", Convert.ToDecimal(totalAmount / 100));
-            result += string.Format("You earned {0} credits\n", volumeCredits);
+            var result = "";
+            GetHeader(invoice, ref result);
+            CountPlays(invoice, plays, ref totalAmount, ref volumeCredits, ref result);
+            GetFooter(totalAmount, volumeCredits, ref result);
             return result;
         }
 
-        private static void CountPlays(Invoice invoice, Dictionary<string, Play> plays, ref int totalAmount, ref int volumeCredits, ref string result, CultureInfo cultureInfo)
+        private static void GetHeader(Invoice invoice, ref string result)
+        {
+            result += string.Format("Statement for {0}\n", invoice.Customer);
+        }
+
+        private static void GetFooter(int totalAmount, int volumeCredits, ref string result)
+        {
+            result += string.Format(new CultureInfo("en-US"), "Amount owed is {0:C}\n", Convert.ToDecimal(totalAmount / 100));
+            result += string.Format("You earned {0} credits\n", volumeCredits);
+        }
+
+        private static void CountPlays(Invoice invoice, Dictionary<string, Play> plays, ref int totalAmount, ref int volumeCredits, ref string result)
         {
             foreach (var perf in invoice.Performances)
             {
@@ -28,7 +38,7 @@ namespace TheatricalPlayersRefactoringKata
                 totalAmount += performanceAmount;
 
                 // print line for this order
-                result += string.Format(cultureInfo, "  {0}: {1:C} ({2} seats)\n", play.Name, Convert.ToDecimal(performanceAmount / 100), perf.Audience);
+                result += string.Format(new CultureInfo("en-US"), "  {0}: {1:C} ({2} seats)\n", play.Name, Convert.ToDecimal(performanceAmount / 100), perf.Audience);
             }
         }
 
