@@ -14,9 +14,9 @@ namespace TheatricalPlayersRefactoringKata.Tests
         public void Test_statement_plain_text_example()
         {
             var plays = new Dictionary<string, Play>();
-            plays.Add("hamlet", new Play("Hamlet", "tragedy"));
-            plays.Add("as-like", new Play("As You Like It", "comedy"));
-            plays.Add("othello", new Play("Othello", "tragedy"));
+            plays.Add("hamlet", new Play("Hamlet", PlayType.Tragedy));
+            plays.Add("as-like", new Play("As You Like It", PlayType.Comedy));
+            plays.Add("othello", new Play("Othello", PlayType.Tragedy));
 
             var invoice = new Invoice("BigCo", new List<Performance>{new Performance("hamlet", 55),
                 new Performance("as-like", 35),
@@ -33,9 +33,9 @@ namespace TheatricalPlayersRefactoringKata.Tests
         public void Test_statement_html_example()
         {
             var plays = new Dictionary<string, Play>();
-            plays.Add("hamlet", new Play("Hamlet", "tragedy"));
-            plays.Add("as-like", new Play("As You Like It", "comedy"));
-            plays.Add("othello", new Play("Othello", "tragedy"));
+            plays.Add("hamlet", new Play("Hamlet", PlayType.Tragedy));
+            plays.Add("as-like", new Play("As You Like It", PlayType.Comedy));
+            plays.Add("othello", new Play("Othello", PlayType.Tragedy));
 
             var invoice = new Invoice("BigCo", new List<Performance>{new Performance("hamlet", 55),
                 new Performance("as-like", 35),
@@ -53,8 +53,8 @@ namespace TheatricalPlayersRefactoringKata.Tests
         public void Test_statement_with_new_play_types()
         {
             var plays = new Dictionary<string, Play>();
-            plays.Add("henry-v", new Play("Henry V", "history"));
-            plays.Add("as-like", new Play("As You Like It", "pastoral"));
+            plays.Add("henry-v", new Play("Henry V", PlayType.History));
+            plays.Add("as-like", new Play("As You Like It", PlayType.Pastoral));
 
             var invoice = new Invoice("BigCoII", new List<Performance>{new Performance("henry-v", 53),
                 new Performance("as-like", 55)});

@@ -19,13 +19,13 @@ namespace TheatricalPlayersRefactoringKata
                 var thisAmount = 0;
                 switch (play.Type) 
                 {
-                    case "tragedy":
+                    case PlayType.Tragedy:
                         thisAmount = 40000;
                         if (perf.Audience > 30) {
                             thisAmount += 1000 * (perf.Audience - 30);
                         }
                         break;
-                    case "comedy":
+                    case PlayType.Comedy:
                         thisAmount = 30000;
                         if (perf.Audience > 20) {
                             thisAmount += 10000 + 500 * (perf.Audience - 20);
@@ -38,7 +38,7 @@ namespace TheatricalPlayersRefactoringKata
                 // add volume credits
                 volumeCredits += Math.Max(perf.Audience - 30, 0);
                 // add extra credit for every ten comedy attendees
-                if ("comedy" == play.Type) volumeCredits += (int)Math.Floor((decimal)perf.Audience / 5);
+                if (PlayType.Comedy == play.Type) volumeCredits += (int)Math.Floor((decimal)perf.Audience / 5);
 
                 // print line for this order
                 result += string.Format(cultureInfo, "  {0}: {1:C} ({2} seats)\n", play.Name, Convert.ToDecimal(thisAmount / 100), perf.Audience);
