@@ -12,20 +12,24 @@ namespace TheatricalPlayersRefactoringKata
             var volumeCredits = 0;
             var result = string.Format("Statement for {0}\n", invoice.Customer);
             CultureInfo cultureInfo = new CultureInfo("en-US");
+            CountPlays(invoice, plays, ref totalAmount, ref volumeCredits, ref result, cultureInfo);
+            result += string.Format(cultureInfo, "Amount owed is {0:C}\n", Convert.ToDecimal(totalAmount / 100));
+            result += string.Format("You earned {0} credits\n", volumeCredits);
+            return result;
+        }
 
-            foreach(var perf in invoice.Performances)
+        private static void CountPlays(Invoice invoice, Dictionary<string, Play> plays, ref int totalAmount, ref int volumeCredits, ref string result, CultureInfo cultureInfo)
+        {
+            foreach (var perf in invoice.Performances)
             {
                 var play = plays[perf.PlayID];
                 int performanceAmount = GetPerformanceAmount(perf, play.Type);
                 volumeCredits = GetVolumeCredits(volumeCredits, perf, play.Type);
+                totalAmount += performanceAmount;
 
                 // print line for this order
                 result += string.Format(cultureInfo, "  {0}: {1:C} ({2} seats)\n", play.Name, Convert.ToDecimal(performanceAmount / 100), perf.Audience);
-                totalAmount += performanceAmount;
             }
-            result += string.Format(cultureInfo, "Amount owed is {0:C}\n", Convert.ToDecimal(totalAmount / 100));
-            result += string.Format("You earned {0} credits\n", volumeCredits);
-            return result;
         }
 
         private static int GetVolumeCredits(int volumeCredits, Performance perf, PlayType playType) {
